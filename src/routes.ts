@@ -1,13 +1,10 @@
 import { Router } from 'express';
-import { createProductController } from './UseCases/CreateProduct';
-import { deleteProductController } from './UseCases/DeleteProduct';
+import { ipStackController } from './UseCases/DataClientOutPut';
 
 const routes = Router();
 
-routes.post('/product', (req, res) => {
-    return createProductController.handle(req, res);
-});
-routes.get('/output', (req, res) => {
-    return deleteProductController.handle(req, res);
+routes.post('/output', (req, res) => {
+    return ipStackController.handle(req, res);
 })
+
 export { routes };
