@@ -1,16 +1,17 @@
-import { IKafkaStreamRepository } from "../../repositories/interfaces/IKafkaStreamRepository";
+import { IKafkaRepository } from "../../repositories/interfaces/IKafkaRepository";
 import api from 'axios';
 import { IAPIStackOutDTO } from './IAPIStackOutDTO';
-import { IDateUserDTO } from './IDateUserDTO';
+import { IDataUserDTO } from './IDataUserDTO';
+import { Producer } from "kafkajs";
 
 class IPStackUseCase {
-    constructor(private kafkaStreamRepository: IKafkaStreamRepository) { }
+    constructor(private IKafkaRepository: IKafkaRepository) { }
 
     async execute(id: number, ip: string, time: number) {
         const url = `http://api.ipstack.com/${ip}?access_key=${process.env.ACCESS_KEY}`;
         const { data: dateAPIStack } = await api.get<IAPIStackOutDTO>(url);
-        const dataUser: IDateUserDTO = { id, ip, time };
-        const response = this.kafkaStreamRepository.transform(dateAPIStack, dataUser);
+        const dataUser: IDataUserDTO = { id, ip, time };
+        const response = this.IKafkaRepository.producer(dateAPIStack, dataUser);
         return response;
     }
 }

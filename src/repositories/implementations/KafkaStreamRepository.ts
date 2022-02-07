@@ -1,12 +1,10 @@
 import { IAPIStackOutDTO } from "../../UseCases/DataClientOutPut/IAPIStackOutDTO";
-import { IDateUserDTO } from "../../UseCases/DataClientOutPut/IDateUserDTO";
-import { IKafkaStreamRepository } from '../interfaces/IKafkaStreamRepository';
+import { IDataUserDTO } from "../../UseCases/DataClientOutPut/IDataUserDTO";
+import { IKafkaRepository } from '../interfaces/IKafkaRepository';
 
-export class KafkaStreamRepository implements IKafkaStreamRepository {
+export class KafkaStreamRepository implements IKafkaRepository {
 
-    async transform(dateAPIStack: IAPIStackOutDTO, dateUser: IDateUserDTO) {
+    async producer(dateAPIStack: IAPIStackOutDTO, dateUser: IDataUserDTO) {
 
-        console.log(dateAPIStack, dateUser);
     }
-
 }
