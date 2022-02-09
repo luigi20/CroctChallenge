@@ -1,5 +1,5 @@
 export interface IDataUserDTO {
-    id: number;
-    ip: string;
-    time: number;
+  id: number;
+  ip: string;
+  time: number;
 }

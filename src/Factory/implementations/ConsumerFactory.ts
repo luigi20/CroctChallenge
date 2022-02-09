@@ -11,7 +11,7 @@ class ConsumerFactory implements IConsumerFactory {
   private createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
       clientId: 'client-id',
-      brokers: ['example.kafka.broker:9092']
+      brokers: ['localhost:9092']
     })
     const consumer = kafka.consumer({ groupId: 'consumer-group' })
     return consumer;
@@ -22,19 +22,18 @@ class ConsumerFactory implements IConsumerFactory {
       topic: 'producer-userData',
       fromBeginning: false
     }
-
     try {
       await this.kafkaConsumer.connect();
       await this.kafkaConsumer.subscribe(topic);
       await this.kafkaConsumer.run({
         eachMessage: async (messagePayload: EachMessagePayload) => {
-          const { topic, partition, message } = messagePayload
-          const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
-          console.log(`- ${prefix} ${message.key}#${message.value}`)
+          const { topic, partition, message } = messagePayload;
+          const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
+          console.log(`- ${prefix} ${message.key}#${message.value}`);
         }
       })
     } catch (error) {
-      console.log('Error: ', error)
+      console.log('Error: ', error);
     }
   }
 
@@ -51,18 +50,18 @@ class ConsumerFactory implements IConsumerFactory {
           const { batch } = eatchBatchPayload;
           const { topic, partition } = batch;
           for (const message of batch.messages) {
-            const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`
+            const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
             console.log(`- ${prefix} ${message.key}#${message.value}`)
           }
         }
       })
     } catch (error) {
-      console.log('Error: ', error)
+      console.log('Error: ', error);
     }
   }
 
   async shutdown(): Promise<void> {
-    await this.kafkaConsumer.disconnect()
+    await this.kafkaConsumer.disconnect();
   }
 }
 
