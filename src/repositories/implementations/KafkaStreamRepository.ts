@@ -20,7 +20,6 @@ export class KafkaStreamRepository implements IKafkaRepository {
       region: dataAPIStack.region_name,
       city: dataAPIStack.city
     };
-    console.log(dataAPIOutUser);
     await kafkaProducer.sendBatch([dataAPIOutUser]);
     await kafkaConsumer.startConsumer();
   }

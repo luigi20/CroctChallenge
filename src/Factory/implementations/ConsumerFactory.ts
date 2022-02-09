@@ -11,7 +11,12 @@ class ConsumerFactory implements IConsumerFactory {
   private createKafkaConsumer(): Consumer {
     const kafka = new Kafka({
       clientId: 'client-id',
-      brokers: ['localhost:9092']
+      brokers: ['localhost:9092'],
+      retry: {
+        initialRetryTime: 300,
+        maxRetryTime: 1800000,
+        retries: 2
+      }
     })
     const consumer = kafka.consumer({ groupId: 'consumer-group' })
     return consumer;
