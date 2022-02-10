@@ -1,6 +1,6 @@
 export interface IConsumerFactory {
 
-  startConsumer(): Promise<void>;
+  startConsumer(): Promise<string>;
   startBatchConsumer(): Promise<void>;
   shutdown(): Promise<void>;
 }

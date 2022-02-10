@@ -22,24 +22,27 @@ class ConsumerFactory implements IConsumerFactory {
     return consumer;
   }
 
-  async startConsumer(): Promise<void> {
+  async startConsumer(): Promise<string> {
     const topic: ConsumerSubscribeTopic = {
       topic: 'producer-userData',
       fromBeginning: false
     }
+    let prefix = "";
     try {
       await this.kafkaConsumer.connect();
       await this.kafkaConsumer.subscribe(topic);
       await this.kafkaConsumer.run({
         eachMessage: async (messagePayload: EachMessagePayload) => {
           const { topic, partition, message } = messagePayload;
-          const prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
+          prefix = `${topic}[${partition} | ${message.offset}] / ${message.timestamp}`;
           console.log(`- ${prefix} ${message.key}#${message.value}`);
         }
       })
+      return prefix;
     } catch (error) {
       console.log('Error: ', error);
     }
+
   }
 
   async startBatchConsumer(): Promise<void> {

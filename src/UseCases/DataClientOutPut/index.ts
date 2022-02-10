@@ -1,9 +1,9 @@
-import { KafkaStreamRepository } from "../../repositories/implementations/KafkaStreamRepository";
+import { KafkaStream } from "../../KafkaStream/implementations/KafkaStream";
 import { IPStackController } from "./IPStackController";
 import { IPStackUseCase } from "./IPStackUseCase";
 
-const kafkaStreamRepository = new KafkaStreamRepository();
-const ipStackUseCase = new IPStackUseCase(kafkaStreamRepository);
+const kafkaStream = new KafkaStream();
+const ipStackUseCase = new IPStackUseCase(kafkaStream);
 const ipStackController = new IPStackController(ipStackUseCase);
 
 export { ipStackUseCase, ipStackController }

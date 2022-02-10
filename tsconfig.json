@@ -9,5 +9,8 @@
     "typeRoots": [
       "./src/@types"
     ],
+    "types": [
+      "@types/jest"
+    ]
   }
 }

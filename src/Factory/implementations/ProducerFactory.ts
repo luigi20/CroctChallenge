@@ -1,4 +1,4 @@
-import { CompressionTypes, Kafka, logCreator, logLevel, Message, Producer, ProducerBatch, TopicMessages } from 'kafkajs';
+import { CompressionTypes, Kafka, Message, Producer, } from 'kafkajs';
 import { IAPIDataOutDTO } from '../../UseCases/DataClientOutPut/IAPIDataOutDTO';
 import { IProducerFactory } from '../interfaces/IProducerFactory';
 
@@ -12,7 +12,11 @@ class ProducerFactory implements IProducerFactory {
   private createProducer(): Producer {
     const kafka = new Kafka({
       clientId: 'producer-client',
-      brokers: ['localhost:9092']
+      brokers: ['localhost:9092'],
+      retry: {
+        retries: 2,
+        initialRetryTime: 300
+      }
     });
     return kafka.producer();
   }
@@ -41,7 +45,7 @@ class ProducerFactory implements IProducerFactory {
       messages: kafkaMessages,
       compression: CompressionTypes.GZIP
     });
-    // await this.shutdown();
+    await this.shutdown();
   };
 }
 
