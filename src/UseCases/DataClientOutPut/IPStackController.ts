@@ -14,7 +14,6 @@ export class IPStackController {
         time: time
       }
       const response = await this.ipStackControllerUseCase.execute(dataUser);
-
       return res.json({ response });
     } catch (err) {
       return res.status(400).json({ error: err.message || 'Unexpected error' });

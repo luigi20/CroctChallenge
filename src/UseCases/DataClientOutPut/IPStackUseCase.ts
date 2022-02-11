@@ -9,7 +9,6 @@ class IPStackUseCase {
   async execute({ id, ip, time }: IDataUserDTO) {
     const url = `http://api.ipstack.com/${ip}?access_key=${process.env.ACCESS_KEY}`;
     const { data: dateAPIStack } = await api.get<IAPIStackOutDTO>(url);
-    console.log(dateAPIStack);
     if (!dateAPIStack.ip) {
       throw new Error("Erro ao Consultar o IP");
     }
